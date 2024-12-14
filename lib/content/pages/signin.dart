@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:pasalpintar_mobile/content/pages/signin.dart';
+import 'package:pasalpintar_mobile/content/pages/signup.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SignUp(),
-  ));
-}
-
-class SignUp extends StatelessWidget {
+class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +25,7 @@ class SignUp extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      'Daftar Akun',
+                      'Masuk Akun',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,
@@ -41,25 +34,11 @@ class SignUp extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Daftar dan Dapatkan Jawaban Hukum.',
+                      'Mulai Jelajahi PasalPintar!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Nama Depan',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Nama Belakang',
-                        border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -78,15 +57,6 @@ class SignUp extends StatelessWidget {
                       ),
                       obscureText: true,
                     ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Konfirmasi Password',
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.visibility_off),
-                      ),
-                      obscureText: true,
-                    ),
                     const SizedBox(height: 50),
                     ElevatedButton(
                       onPressed: () {},
@@ -98,28 +68,7 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Daftar',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 230, 230, 230),
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      icon: Image.asset(
-                        "assets/logo/google.png",
-                        width: 25,
-                        height: 25,
-                      ),
-                      label: Text(
-                        'Masuk dengan Google',
+                        'Masuk',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
@@ -129,12 +78,12 @@ class SignUp extends StatelessWidget {
                         builder: (context) {
                           return RichText(
                             text: TextSpan(
-                              text: 'Sudah punya akun? ',
+                              text: 'Belum punya akun? ',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12),
                               children: [
                                 TextSpan(
-                                  text: 'Masuk',
+                                  text: 'Daftar',
                                   style: TextStyle(
                                     color: Colors.blue,
                                     fontSize: 12,
@@ -145,7 +94,7 @@ class SignUp extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => SignIn(),
+                                          builder: (context) => SignUp(),
                                         ),
                                       );
                                     },
