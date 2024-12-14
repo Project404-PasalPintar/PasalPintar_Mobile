@@ -156,6 +156,7 @@ class _CommentsPageState extends State<CommentsPage> {
                       return CommentCard(
                         username: comment['username'] ?? "Anonim",
                         comment: comment['comment'],
+                        profilePic: comment['profilePic'],
                         createdAt: comment['createdAt'],
                       );
                     },
@@ -202,12 +203,14 @@ class CommentCard extends StatelessWidget {
   final String username;
   final String comment;
   final String createdAt;
+  final String? profilePic;
 
   const CommentCard({
     Key? key,
     required this.username,
     required this.comment,
     required this.createdAt,
+    this.profilePic,
   }) : super(key: key);
 
   @override
@@ -220,22 +223,42 @@ class CommentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: Colors.white,
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            username,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          // Profile Image or Default Icon
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: profilePic != null && profilePic!.isNotEmpty
+                ? NetworkImage(profilePic!)
+                : null,
+            child: profilePic == null || profilePic!.isEmpty
+                ? const Icon(Icons.person, size: 20)
+                : null,
           ),
-          const SizedBox(height: 8),
-          Text(
-            comment,
-            style: const TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            createdAt,
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          const SizedBox(width: 10),
+          // Comment Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  username,
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  comment,
+                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  createdAt,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                ),
+              ],
+            ),
           ),
         ],
       ),
