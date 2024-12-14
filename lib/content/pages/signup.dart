@@ -90,8 +90,12 @@ class _SignUpState extends State<SignUp> {
       await secureStorage.write(
           key: 'email', value: responseBody['data']['email']);
 
-      // Pindah ke halaman signin setelah berhasil
-      Navigator.pushReplacementNamed(context, '/signin');
+      // Pindah ke halaman SignIn setelah berhasil dengan menghapus stack navigasi
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => SignIn()),
+        (Route<dynamic> route) => false, // Menghapus semua rute sebelumnya
+      );
     } else {
       // Jika gagal, tampilkan pesan error
       setState(() {
@@ -258,7 +262,12 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Navigator.pushNamed(context, '/signin');
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignIn()),
+                                        (Route<dynamic> route) => false,
+                                      );
                                     },
                                 ),
                               ],
