@@ -33,14 +33,14 @@ class LawListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Daftar Hukum'),
         backgroundColor: Colors.blue,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Tambahkan fungsi pencarian jika diperlukan
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.search),
+        //     onPressed: () {
+        //       // Tambahkan fungsi pencarian jika diperlukan
+        //     },
+        //   ),
+        // ],
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _loadLawData(),

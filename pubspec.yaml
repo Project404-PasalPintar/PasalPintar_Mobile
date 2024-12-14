@@ -64,6 +64,13 @@ flutter:
     - assets/icons/
     - assets/image/
     - lib/data/data.json
+    - lib/data/news.json
+    - assets/image/sengketa_tanah.jpeg
+    - assets/image/hukum_waris.png
+    - assets/image/penipuan_online.png
+    - assets/image/korupsi.png
+    - assets/image/persaingan_usaha.jpg
+    - assets/image/perpajakan.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
