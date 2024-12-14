@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: const Color.fromARGB(221, 10, 96, 128),
+        backgroundColor: Colors.blue,
       ),
       body: const ProfilePage(),
       bottomNavigationBar: const CustomNavBar(currentIndex: 4),

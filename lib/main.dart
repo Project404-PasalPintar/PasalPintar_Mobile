@@ -6,6 +6,7 @@ import 'package:pasalpintar_mobile/content/pages/signin.dart';
 import 'package:pasalpintar_mobile/content/pages/signup.dart';
 import 'package:pasalpintar_mobile/content/pages/home.dart';
 import 'package:pasalpintar_mobile/content/pages/profile.dart';
+import 'package:pasalpintar_mobile/content/pages/lawlist.dart';
 import 'package:pasalpintar_mobile/content/pages/forum.dart';
 import 'package:pasalpintar_mobile/content/pages/lawyer.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUp(),
         '/home': (context) => Home(),
         '/profile': (context) => Profile(),
+        '/lawlist': (context) => Lawlist(),
         '/forum': (context) => Forum(),
         '/lawyer': (context) => Lawyer(),
       },
