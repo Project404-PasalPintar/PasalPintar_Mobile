@@ -1,0 +1,38 @@
+{
+  "perdata": [
+    {
+      "title": "Penyelesaian Sengketa Tanah di Pengadilan",
+      "deskripsiberita": "Sengketa tanah semakin marak di Indonesia, dengan banyak kasus yang masuk ke pengadilan. Penyelesaian sengketa tanah menjadi hal yang penting dalam hukum perdata.",
+      "image": "assets/image/sengketa_tanah.jpeg"
+    },
+    {
+      "title": "Reformasi Hukum Waris di Indonesia",
+      "deskripsiberita": "Hukum waris di Indonesia sedang mengalami reformasi untuk menjawab tantangan perubahan sosial dan budaya. Pemerintah berusaha menyusun regulasi yang lebih modern.",
+      "image": "assets/image/hukum_waris.png"
+    }
+  ],
+  "pidana": [
+    {
+      "title": "Kasus Penipuan Online Menjadi Perhatian Publik",
+      "deskripsiberita": "Kasus penipuan online yang melibatkan sejumlah pelaku internasional sedang menjadi perhatian besar di kalangan penegak hukum.",
+      "image": "assets/image/penipuan_online.png"
+    },
+    {
+      "title": "Tindak Pidana Korupsi yang Merugikan Negara",
+      "deskripsiberita": "Penyidikan terhadap kasus korupsi yang melibatkan pejabat negara terus berlanjut, dengan banyak pihak yang terlibat dalam skandal besar ini.",
+      "image": "assets/image/korupsi.png"
+    }
+  ],
+  "bisnis": [
+    {
+      "title": "Peran Hukum dalam Mencegah Persaingan Usaha Tidak Sehat",
+      "deskripsiberita": "Persaingan usaha yang tidak sehat sering kali terjadi di dunia bisnis. Pemerintah memperkenalkan aturan baru untuk menjaga iklim bisnis yang sehat dan adil.",
+      "image": "assets/image/persaingan_usaha.png"
+    },
+    {
+      "title": "Perubahan Peraturan Perpajakan yang Mempengaruhi Bisnis",
+      "deskripsiberita": "Dengan adanya perubahan peraturan perpajakan, banyak bisnis harus menyesuaikan kebijakan pajak mereka untuk mematuhi ketentuan yang baru.",
+      "image": "assets/image/perpajakan.png"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../navigation/custom_nav_bar.dart';
 import '../pages/lawyer/lawyer_detail.dart';
 import '../pages/chat/chat_ai_page.dart';
+import 'package:pasalpintar_mobile/content/pages/news/law_news.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -53,10 +54,7 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 10),
             _buildTopPengacara(),
             const SizedBox(height: 20),
-            const Text(
-              "Berita Hukum Terbaru",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            _buildBeritaHukumTitle(), // Ganti ini
             const SizedBox(height: 10),
             _buildBeritaHukum(),
           ],
@@ -218,6 +216,34 @@ class _HomeState extends State<Home> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildBeritaHukumTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          "Berita Hukum Terbaru",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LawNews()),
+            );
+          },
+          child: const Text(
+            "See More",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
