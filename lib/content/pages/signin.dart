@@ -62,19 +62,36 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+        body: SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: Colors.grey, width: 1)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               const Text(
                 'Masuk Akun',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 8),
+              Text(
+                'Mulai Jelajahi PasalPintar!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 60),
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -152,6 +169,6 @@ class _SignInState extends State<SignIn> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
