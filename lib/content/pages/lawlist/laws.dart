@@ -27,40 +27,49 @@ class LawsPage extends StatelessWidget {
                 return Card(
                   elevation: 4,
                   margin: const EdgeInsets.only(bottom: 16),
-                  child: ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      // child: Image.asset(
-                      //   'assets/image/image1.png', // Gambar placeholder
-                      //   width: 50,
-                      //   height: 50,
-                      //   fit: BoxFit.cover,
-                      // ),
-                    ),
-                    title: Text(
-                      pasal['NamaPasal'] ?? 'Pasal Tidak Ditemukan',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    subtitle: Text(
-                      pasal['DeskripsiPasal'] ?? 'Deskripsi tidak tersedia.',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                    onTap: () {
-                      // Navigasi ke LawsOverviewPage
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LawsOverviewPage(
-                            detailHukum: pasal, // Kirim data pasal
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          pasal['NamaPasal'] ?? 'Pasal Tidak Ditemukan',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
-                      );
-                    },
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                pasal['DeskripsiPasal'] ??
+                                    'Deskripsi tidak tersedia.',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                            IconButton(
+                              icon:
+                                  const Icon(Icons.arrow_forward_ios, size: 16),
+                              onPressed: () {
+                                // Navigasi ke LawsOverviewPage
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LawsOverviewPage(
+                                      detailHukum: pasal, // Kirim data pasal
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
