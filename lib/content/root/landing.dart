@@ -38,7 +38,7 @@ class LandingPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: Image.asset(
-                  "assets/logo/logo.png",
+                  "assets/logo/pasalpintar.png",
                   fit: BoxFit.cover,
                 ),
               ),
