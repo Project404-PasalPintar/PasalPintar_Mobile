@@ -1,38 +1,44 @@
 {
   "perdata": [
     {
+      "id": 3,
       "title": "Penyelesaian Sengketa Tanah di Pengadilan",
-      "deskripsiberita": "Sengketa tanah semakin marak di Indonesia, dengan banyak kasus yang masuk ke pengadilan. Penyelesaian sengketa tanah menjadi hal yang penting dalam hukum perdata.",
+      "deskripsiberita": "Sengketa tanah semakin marak di Indonesia, terutama dengan meningkatnya kebutuhan akan lahan di tengah pertumbuhan penduduk dan pembangunan. Kasus-kasus sengketa tanah yang masuk ke pengadilan seringkali melibatkan berbagai pihak, seperti individu, badan hukum, atau bahkan pemerintah. Penyebab sengketa tanah beragam, mulai dari ketidaksesuaian dokumen kepemilikan, permasalahan warisan, hingga konflik batas wilayah. Situasi ini menunjukkan betapa pentingnya kepastian hukum dalam kepemilikan dan penggunaan tanah. Penyelesaian sengketa tanah di pengadilan menjadi salah satu upaya hukum yang ditempuh untuk mendapatkan keadilan. Proses ini melibatkan peninjauan dokumen, pemeriksaan saksi, hingga mediasi yang diarahkan oleh hakim. Meski begitu, penyelesaian di pengadilan sering memakan waktu lama dan membutuhkan biaya yang besar. Oleh karena itu, diperlukan pendekatan hukum yang tegas, transparan, dan berkeadilan untuk menyelesaikan sengketa tanah secara efektif, sekaligus meminimalkan konflik di masa depan.",
       "image": "assets/image/sengketa_tanah.jpeg"
     },
     {
+      "id": 2,
       "title": "Reformasi Hukum Waris di Indonesia",
-      "deskripsiberita": "Hukum waris di Indonesia sedang mengalami reformasi untuk menjawab tantangan perubahan sosial dan budaya. Pemerintah berusaha menyusun regulasi yang lebih modern.",
+      "deskripsiberita": "Hukum waris di Indonesia saat ini masih mengacu pada tiga sistem hukum yang berlaku, yaitu hukum waris Islam, hukum waris adat, dan hukum waris perdata. Ketiga sistem tersebut seringkali menimbulkan kebingungan di masyarakat, terutama ketika terjadi konflik dalam pembagian harta warisan. Ketidaksinkronan di antara sistem hukum ini kerap mempersulit proses penyelesaian, sehingga memunculkan kebutuhan mendesak untuk mereformasi hukum waris di Indonesia. Reformasi hukum waris bertujuan untuk menciptakan aturan yang lebih harmonis, adil, dan relevan dengan dinamika masyarakat modern. Langkah ini mencakup pembaruan regulasi, penyelarasan antar sistem hukum, serta penyederhanaan prosedur hukum waris. Dengan adanya reformasi, diharapkan dapat tercipta kepastian hukum bagi masyarakat, sekaligus mengurangi potensi sengketa yang sering kali memecah hubungan keluarga. Reformasi juga perlu mempertimbangkan nilai-nilai keadilan sosial dan keberagaman budaya, sehingga tetap menghormati tradisi lokal tanpa mengorbankan prinsip-prinsip universal tentang keadilan.",
       "image": "assets/image/hukum_waris.png"
     }
   ],
   "pidana": [
     {
+      "id": 5,
       "title": "Kasus Penipuan Online Menjadi Perhatian Publik",
-      "deskripsiberita": "Kasus penipuan online yang melibatkan sejumlah pelaku internasional sedang menjadi perhatian besar di kalangan penegak hukum.",
+      "deskripsiberita": "Kasus penipuan online yang melibatkan jaringan pelaku internasional sedang menjadi sorotan publik dan perhatian besar di kalangan penegak hukum. Modus operandi para pelaku semakin canggih, mulai dari phishing, penipuan investasi palsu, hingga manipulasi data pribadi korban. Hal ini menimbulkan kerugian besar, baik secara finansial maupun psikologis, bagi masyarakat yang menjadi korban. Maraknya kasus ini menunjukkan bahwa teknologi digital tidak hanya membawa manfaat, tetapi juga risiko jika tidak diimbangi dengan kesadaran keamanan siber yang memadai. Penegak hukum di berbagai negara bekerja sama untuk mengungkap jaringan kejahatan ini melalui pendekatan lintas batas, seperti pertukaran informasi intelijen dan pelacakan aliran dana. Selain itu, edukasi masyarakat tentang pentingnya menjaga kerahasiaan data pribadi dan mengenali tanda-tanda penipuan online menjadi langkah preventif yang krusial untuk mengurangi dampak kejahatan siber.",
       "image": "assets/image/penipuan_online.png"
     },
     {
+      "id": 4,
       "title": "Tindak Pidana Korupsi yang Merugikan Negara",
-      "deskripsiberita": "Penyidikan terhadap kasus korupsi yang melibatkan pejabat negara terus berlanjut, dengan banyak pihak yang terlibat dalam skandal besar ini.",
+      "deskripsiberita": "Penyidikan terhadap kasus korupsi yang melibatkan pejabat negara terus berlanjut dan menjadi perhatian serius dari berbagai pihak. Kasus ini terungkap setelah adanya laporan dugaan penyalahgunaan wewenang dan penggelapan dana publik dalam jumlah besar. Aparat penegak hukum telah melakukan serangkaian langkah, mulai dari pengumpulan bukti hingga pemanggilan saksi-saksi kunci yang dianggap mengetahui detail praktik korupsi ini. Skandal ini tidak hanya menyorot peran individu tertentu, tetapi juga menunjukkan kelemahan sistem yang memungkinkan terjadinya tindakan tersebut.Banyak pihak yang terlibat dalam skandal besar ini, termasuk sejumlah pejabat tinggi yang memiliki posisi strategis di pemerintahan. Selain itu, indikasi keterlibatan pihak swasta dan oknum lainnya menambah kompleksitas kasus ini. Publik menuntut transparansi dan keadilan dalam proses hukum, dengan harapan bahwa tindakan tegas dapat memberikan efek jera. Di sisi lain, skandal ini juga menjadi momentum bagi pemerintah untuk memperbaiki mekanisme pengawasan dan akuntabilitas guna mencegah kasus serupa terulang di masa depan.",
       "image": "assets/image/korupsi.png"
     }
   ],
   "bisnis": [
     {
+      "id": 6,
       "title": "Peran Hukum dalam Mencegah Persaingan Usaha Tidak Sehat",
-      "deskripsiberita": "Persaingan usaha yang tidak sehat sering kali terjadi di dunia bisnis. Pemerintah memperkenalkan aturan baru untuk menjaga iklim bisnis yang sehat dan adil.",
-      "image": "assets/image/persaingan_usaha.png"
+      "deskripsiberita": "Persaingan usaha yang tidak sehat, seperti praktik monopoli, kartel, dan dumping, sering terjadi di dunia bisnis dan dapat merugikan pelaku usaha kecil serta konsumen. Fenomena ini menciptakan ketidakseimbangan pasar yang menghambat inovasi dan perkembangan ekonomi secara berkelanjutan. Untuk mengatasi masalah ini, pemerintah memperkenalkan berbagai regulasi guna menciptakan iklim bisnis yang sehat, kompetitif, dan adil. Peran hukum sangat penting dalam mencegah dan menangani praktik-praktik yang merusak persaingan usaha. Melalui undang-undang dan lembaga pengawas seperti Komisi Pengawas Persaingan Usaha (KPPU), pemerintah menegakkan aturan dan memberikan sanksi tegas bagi pelaku yang melanggar. Selain itu, edukasi kepada pelaku usaha tentang etika bisnis dan kepatuhan hukum turut mendukung terciptanya persaingan yang sehat. Dengan langkah-langkah ini, diharapkan pasar yang lebih transparan dan kompetitif dapat tercapai, sehingga memberikan manfaat optimal bagi semua pihak, termasuk konsumen.",
+      "image": "assets/image/persaingan_usaha.jpg"
     },
     {
+      "id": 1,
       "title": "Perubahan Peraturan Perpajakan yang Mempengaruhi Bisnis",
-      "deskripsiberita": "Dengan adanya perubahan peraturan perpajakan, banyak bisnis harus menyesuaikan kebijakan pajak mereka untuk mematuhi ketentuan yang baru.",
-      "image": "assets/image/perpajakan.png"
+      "deskripsiberita": "Perubahan peraturan perpajakan yang diterapkan pemerintah sering kali memengaruhi dinamika dunia bisnis. Perubahan ini mencakup revisi tarif pajak, penghapusan insentif tertentu, atau pengenalan jenis pajak baru yang bertujuan untuk meningkatkan penerimaan negara. Akibatnya, banyak perusahaan harus menyesuaikan kebijakan dan strategi pajak mereka untuk memastikan kepatuhan terhadap ketentuan yang berlaku. Penyesuaian tersebut tidak hanya melibatkan penghitungan ulang kewajiban pajak, tetapi juga berdampak pada perencanaan keuangan, struktur bisnis, dan harga produk atau jasa. Di sisi lain, perubahan peraturan perpajakan juga bisa membuka peluang, misalnya melalui insentif pajak untuk investasi hijau atau digitalisasi. Oleh karena itu, perusahaan perlu proaktif dalam memahami dan mengantisipasi dampak perubahan ini agar tetap kompetitif, sekaligus memanfaatkan peluang yang ditawarkan oleh regulasi baru.",
+      "image": "assets/image/perpajakan.jpg"
     }
   ]
 }

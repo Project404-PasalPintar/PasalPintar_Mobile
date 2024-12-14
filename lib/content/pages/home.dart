@@ -6,12 +6,20 @@ import '../navigation/custom_nav_bar.dart';
 import '../pages/lawyer/lawyer_detail.dart';
 import '../pages/chat/chat_ai_page.dart';
 import 'package:pasalpintar_mobile/content/pages/news/law_news.dart';
+import './news/details_new.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
+}
+
+Future<Map<String, dynamic>> loadNewsData() async {
+  final String response = await rootBundle.loadString('lib/data/news.json');
+  final data = json.decode(response);
+  return data;
 }
 
 class _HomeState extends State<Home> {
@@ -54,7 +62,7 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 10),
             _buildTopPengacara(),
             const SizedBox(height: 20),
-            _buildBeritaHukumTitle(), // Ganti ini
+            _buildBeritaHukumTitle(),
             const SizedBox(height: 10),
             _buildBeritaHukum(),
           ],
@@ -205,12 +213,12 @@ class _HomeState extends State<Home> {
               final lawyer = lawyers[index];
               final name = '${lawyer['firstName']}';
               final profilePic = lawyer['profilePic'];
-              final id = lawyer['id']; // Pastikan ID diterima dengan benar
+              final id = lawyer['id'];
 
               return _LawyerCard(
                 name: name,
                 profilePic: profilePic,
-                id: id, // Kirimkan ID ke _LawyerCard
+                id: id,
               );
             },
           ),
@@ -248,19 +256,77 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildBeritaHukum() {
-    return Container(
-      height: 100,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Center(
-        child: Text(
-          "Berita Hukum Placeholder",
-          style: TextStyle(color: Colors.black54),
-        ),
-      ),
+    return FutureBuilder<Map<String, dynamic>>(
+      future: loadNewsData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Gagal memuat berita.'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('Tidak ada berita hukum.'));
+        }
+        final newsData = snapshot.data!;
+        final List<dynamic> allArticles = [
+          ...newsData['perdata'],
+          ...newsData['pidana'],
+          ...newsData['bisnis']
+        ];
+        allArticles.sort((a, b) => b['id'].compareTo(a['id']));
+        final recentArticles = allArticles.take(3).toList();
+
+        return Column(
+          children: recentArticles.map((article) {
+            return Card(
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ListTile(
+                leading: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[200],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      article['image'],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.broken_image,
+                            color: Colors.grey);
+                      },
+                    ),
+                  ),
+                ),
+                title: Text(
+                  article['title'],
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  article['deskripsiberita'],
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.black54),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailNewsPage(
+                        title: article['title'],
+                        imagePath: article['image'],
+                        description: article['deskripsiberita'],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 
@@ -324,7 +390,7 @@ class _FeatureCard extends StatelessWidget {
 class _LawyerCard extends StatelessWidget {
   final String name;
   final String? profilePic;
-  final String id; // Tambahkan ID
+  final String id;
 
   const _LawyerCard({
     required this.name,
@@ -336,12 +402,11 @@ class _LawyerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigasi ke halaman detail pengacara dengan ID
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => LawyerDetailPage(
-              lawyerId: id, // Kirim ID ke halaman detail
+              lawyerId: id,
             ),
           ),
         );
@@ -358,7 +423,7 @@ class _LawyerCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(50), // Circular avatar
+              borderRadius: BorderRadius.circular(50),
               child: profilePic != null && profilePic!.isNotEmpty
                   ? Image.network(
                       profilePic!,
@@ -370,8 +435,7 @@ class _LawyerCard extends StatelessWidget {
                             size: 50, color: Colors.grey);
                       },
                     )
-                  : const Icon(Icons.person,
-                      size: 50, color: Colors.grey), // Default icon
+                  : const Icon(Icons.person, size: 50, color: Colors.grey),
             ),
             const SizedBox(height: 8),
             Text(

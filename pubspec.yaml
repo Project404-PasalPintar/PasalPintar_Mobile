@@ -69,8 +69,8 @@ flutter:
     - assets/image/hukum_waris.png
     - assets/image/penipuan_online.png
     - assets/image/korupsi.png
-    - assets/image/persaingan_usaha.png
-    - assets/image/perpajakan.png
+    - assets/image/persaingan_usaha.jpg
+    - assets/image/perpajakan.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

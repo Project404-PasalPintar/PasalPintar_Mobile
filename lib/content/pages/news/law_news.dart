@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pasalpintar_mobile/content/pages/home.dart';
+import './details_new.dart';
 
 void main() {
   runApp(LawNews());
@@ -25,20 +26,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late Future<Map<String, dynamic>>
-      _newsData; // Variabel untuk menyimpan data berita
+  late Future<Map<String, dynamic>> _newsData;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _newsData = loadNewsData(); // Memanggil fungsi untuk memuat data berita
+    _newsData = loadNewsData();
   }
 
-  // Fungsi untuk memuat data dari file JSON
   Future<Map<String, dynamic>> loadNewsData() async {
     final String response = await rootBundle.loadString('lib/data/news.json');
-    final data = json.decode(response); // Mengonversi JSON menjadi Map
+    final data = json.decode(response);
     return data;
   }
 
@@ -49,12 +48,10 @@ class _HomeScreenState extends State<HomeScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Ganti fungsionalitas arrow_back dengan navigasi ke halaman baru
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    Home(), // Ganti dengan halaman yang diinginkan
+                builder: (context) => Home(),
               ),
             );
           },
@@ -83,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen>
             return const Center(child: Text('No data available'));
           }
 
-          // Mengambil data dari snapshot
           final newsData = snapshot.data!;
           return TabBarView(
             controller: _tabController,
@@ -111,22 +107,66 @@ class ArticleListView extends StatelessWidget {
       itemCount: articles.length,
       itemBuilder: (context, index) {
         final article = articles[index];
-        return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          child: ListTile(
-            leading: Container(
-              width: 60,
-              height: 60,
-              child: Image.asset(
-                article['image'], // Path gambar diambil dari JSON
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.broken_image);
-                },
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailNewsPage(
+                  title: article['title'],
+                  imagePath: article['image'],
+                  description: article['deskripsiberita'],
+                ),
               ),
+            );
+          },
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListTile(
+              leading: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[200],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    article['image'],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.broken_image, color: Colors.grey);
+                    },
+                  ),
+                ),
+              ),
+              title: Text(
+                article['title'],
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                article['deskripsiberita'],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: Colors.black54),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailNewsPage(
+                      title: article['title'],
+                      imagePath: article['image'],
+                      description: article['deskripsiberita'],
+                    ),
+                  ),
+                );
+              },
             ),
-            title: Text(article['title']),
-            subtitle: Text(article['deskripsiberita']),
           ),
         );
       },
