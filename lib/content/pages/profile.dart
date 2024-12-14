@@ -108,9 +108,17 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
-          'Lihat Profil',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileImagePage()),
+            );
+          },
+          child: const Text(
+            'Lihat Profile',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -173,6 +181,80 @@ class MenuTile extends StatelessWidget {
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: onTap,
+    );
+  }
+}
+
+// Show Image Profile
+class ProfileImagePage extends StatelessWidget {
+  const ProfileImagePage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            // Back Navigation
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text(
+          "Gambar Profil",
+          style: TextStyle(color: Colors.black, fontSize: 18),
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Image Profile
+            Container(
+              width: 400,
+              height: 400,
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                border: Border.all(color: Colors.black54, width: 2),
+              ),
+              child: const Icon(
+                Icons.person,
+                size: 120,
+                color: Colors.black54,
+              ),
+            ),
+            // Edit Image
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () {
+                  // Action to change image profile
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Ganti gambar diimplementasikan di sini'),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
