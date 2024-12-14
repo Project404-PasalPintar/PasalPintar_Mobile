@@ -58,34 +58,34 @@
     ]
   },
   {
-    "NamaHukum": "Undang-Undang Dasar Negara Republik Indonesia Tahun 1945 (UUD 1945)",
-    "Deskripsi": "Bersumber pada Burgerlijk Wetboek (BW) peninggalan kolonial Belanda, diresmikan melalui Staatsblad Nomor 23 Tahun 1847.",
+    "NamaHukum": "Undang-Undang Nomor 13 Tahun 2003 tentang Ketenagakerjaan",
+    "Deskripsi": "Undang-undang yang mengatur ketenagakerjaan di Indonesia, bertujuan untuk melindungi dan mengatur hubungan kerja antara pekerja dan pengusaha.",
     "Pasal": [
       {
         "NamaPasal": "Pasal 1",
         "DeskripsiPasal": "Menikmati hak-hak kewargaan tidak tergantung pada hak-hak kenegaraan.",
-        "Nomor": "",
+        "Nomor": "13",
         "Jenis": "Undang-Undang",
         "SingkatanJenis": "UU",
-        "TanggalDitetapkan": "1847-04-30",
-        "TEUBadan": "Pemerintah Hindia Belanda",
+        "TanggalDitetapkan": "25 Maret 2003",
+        "TEUBadan": "Indonesia, Pemerintah Pusata",
         "TempatPenetapan": "Jakarta",
-        "BidangHukum": "Perdata",
-        "Status": "Aktif",
-        "Subjek": "Orang, benda, perikatan"
+        "BidangHukum": "",
+        "Status": "Berlaku",
+        "Subjek": "KETENAGAKERJAAN"
       },
       {
-        "NamaPasal": "Pasal 2",
-        "DeskripsiPasal": "Anak yang ada dalam kandungan seorang perempuan dianggap telah lahir, setiap kali kepentingan si anak menghendakinya. Bila telah mati sewaktu dilahirkan, dia dianggap tidak pernah ada.",
-        "Nomor": "",
+        "NamaPasal": "Pasal 1",
+        "DeskripsiPasal": "Menikmati hak-hak kewargaan tidak tergantung pada hak-hak kenegaraan.",
+        "Nomor": "13",
         "Jenis": "Undang-Undang",
         "SingkatanJenis": "UU",
-        "TanggalDitetapkan": "1847-04-30",
-        "TEUBadan": "Pemerintah Hindia Belanda",
+        "TanggalDitetapkan": "25 Maret 2003",
+        "TEUBadan": "Indonesia, Pemerintah Pusata",
         "TempatPenetapan": "Jakarta",
-        "BidangHukum": "Perdata",
-        "Status": "Aktif",
-        "Subjek": "Orang, benda, perikatan"
+        "BidangHukum": "",
+        "Status": "Berlaku",
+        "Subjek": "KETENAGAKERJAAN"
       }
     ]
   }
