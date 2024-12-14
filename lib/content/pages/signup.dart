@@ -84,20 +84,16 @@ class _SignUpState extends State<SignUp> {
     final responseBody = json.decode(response.body);
 
     if (response.statusCode == 200 && responseBody['status'] == 'success') {
-      // Jika berhasil, simpan data (misalnya token) menggunakan flutter_secure_storage
       await secureStorage.write(
           key: 'userID', value: responseBody['data']['userID']);
       await secureStorage.write(
           key: 'email', value: responseBody['data']['email']);
-
-      // Pindah ke halaman SignIn setelah berhasil dengan menghapus stack navigasi
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => SignIn()),
-        (Route<dynamic> route) => false, // Menghapus semua rute sebelumnya
+        (Route<dynamic> route) => false,
       );
     } else {
-      // Jika gagal, tampilkan pesan error
       setState(() {
         errorMessage = responseBody['message'] ?? 'Pendaftaran gagal.';
       });

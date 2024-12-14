@@ -4,9 +4,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../navigation/custom_nav_bar.dart';
 import '../pages/lawyer/lawyer_detail.dart';
+import '../pages/chat/chat_ai_page.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +91,8 @@ class Home extends StatelessWidget {
   }
 
   Widget _buildTanyaBangKimSection() {
+    final TextEditingController _messageController = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -104,6 +120,7 @@ class Home extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  controller: _messageController,
                   decoration: InputDecoration(
                     hintText: 'Ceritakan masalahmu',
                     filled: true,
@@ -127,7 +144,16 @@ class Home extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    // Logika Tanya Dong Bang Kim
+                    if (_messageController.text.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatAIPage(
+                            initialMessage: _messageController.text,
+                          ),
+                        ),
+                      );
+                    }
                   },
                   icon: const Icon(Icons.send, color: Colors.white),
                 ),
@@ -144,12 +170,16 @@ class Home extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: const [
         _FeatureCard(
-          title: "Klasifikasi Hukum",
-          iconPath: "assets/icons/icons8-lawyer-50.png",
+          title: "Chat AI",
+          iconPath: "assets/logo/ai-chat.png",
         ),
         _FeatureCard(
-          title: "Coming soon",
-          iconPath: "assets/icons/icons8-forum-50.png",
+          title: "Konsultasi",
+          iconPath: "assets/logo/konsultasi.png",
+        ),
+        _FeatureCard(
+          title: "Komunitas",
+          iconPath: "assets/logo/komunitas.png",
         ),
       ],
     );

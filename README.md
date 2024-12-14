@@ -1,16 +1,20 @@
-# pasalpintar_mobile
+# Pasal Pintar Mobile App 📱
 
-A new Flutter project.
+Pasal Pintar is a mobile application designed to provide fast and accurate legal solutions for users. Built with Flutter, this app enables seamless access to legal information, community forums, lawyer consultations, and an AI-powered chatbot for personalized legal assistance.
 
-## Getting Started
+## 📋 Features
 
-This project is a starting point for a Flutter application.
+- **Generative Chatbot**: Engage with an AI-powered chatbot to get answers to legal questions.
+- **Legal Forums**: Participate in discussions and share insights with the community.
+- **Lawyer Consultations**: Connect with professional lawyers for personalized advice.
+- **Comprehensive Legal Database**: Access categorized legal articles and regulations from Indonesia.
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Objective
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The mobile app aims to enhance legal literacy and provide a convenient platform for users to navigate legal challenges. By democratizing legal access, Pasal Pintar empowers individuals and businesses to make informed decisions.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Built With
+
+- **Framework**: Flutter
+- **Backend**: Firebase, Cloud Functions
+- **AI Integration**: Generative chatbot using OpenAI and Hugging Face Transformers
