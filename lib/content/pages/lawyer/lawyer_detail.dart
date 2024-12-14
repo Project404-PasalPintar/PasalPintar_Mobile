@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import "../chat/chat_lawyer_page.dart";
 
 class LawyerDetailPage extends StatefulWidget {
   final String lawyerId; // ID pengacara diterima dari Home Page
@@ -169,7 +170,17 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Tambahkan logika ketika tombol diklik
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                  chatRoomId:
+                                      "chatRoom123", // Ubah dengan ID chat room yang sesuai
+                                  lawyerName:
+                                      "${lawyerData!['firstName']} ${lawyerData!['lastName']}",
+                                ),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
