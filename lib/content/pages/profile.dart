@@ -31,13 +31,16 @@ class ProfilePage extends StatelessWidget {
     final storage = FlutterSecureStorage();
     final refreshToken = await storage.read(key: 'refreshToken');
 
+    // Tambahkan log untuk mencetak nilai refreshToken
+    print('RefreshToken sebelum logout: $refreshToken');
+
     if (refreshToken == null || refreshToken.isEmpty) {
       _navigateToLogin(context);
       return;
     }
 
     try {
-      final response = await http.post(
+      final response = await http.delete(
         Uri.parse('$baseUrl/v1/users/auth/sign-out'),
         headers: {
           'Authorization': 'Bearer $refreshToken',
@@ -45,19 +48,33 @@ class ProfilePage extends StatelessWidget {
         },
       );
 
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
         await storage.delete(key: 'refreshToken');
         await storage.delete(key: 'accessToken');
         _navigateToLogin(context);
+      } else if (response.statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Token tidak valid. Silakan login ulang.')),
+        );
+      } else if (response.statusCode == 500) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Kesalahan server. Coba lagi nanti.')),
+        );
       } else {
-        Future.microtask(() => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Logout gagal. Coba lagi.')),
-            ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Logout gagal. Status code: ${response.statusCode}'),
+          ),
+        );
       }
     } catch (e) {
-      Future.microtask(() => ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Terjadi kesalahan saat logout: $e')),
-          ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan saat logout: $e')),
+      );
     }
   }
 
