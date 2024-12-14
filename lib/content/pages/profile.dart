@@ -31,7 +31,6 @@ class ProfilePage extends StatelessWidget {
     final storage = FlutterSecureStorage();
     final refreshToken = await storage.read(key: 'refreshToken');
 
-    // Tambahkan log untuk mencetak nilai refreshToken
     print('RefreshToken sebelum logout: $refreshToken');
 
     if (refreshToken == null || refreshToken.isEmpty) {
@@ -52,23 +51,22 @@ class ProfilePage extends StatelessWidget {
       print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        await storage.delete(key: 'refreshToken');
-        await storage.delete(key: 'accessToken');
-        _navigateToLogin(context);
+        await storage
+            .deleteAll(); // Hapus semua token (refreshToken & accessToken)
+        _navigateToLogin(context); // Panggil fungsi navigasi
       } else if (response.statusCode == 401) {
+        // Tangani token tidak valid
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text('Token tidak valid. Silakan login ulang.')),
         );
-      } else if (response.statusCode == 500) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kesalahan server. Coba lagi nanti.')),
-        );
+        await storage.deleteAll(); // Hapus token jika tidak valid
+        _navigateToLogin(context); // Panggil fungsi navigasi
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Logout gagal. Status code: ${response.statusCode}'),
-          ),
+              content:
+                  Text('Logout gagal. Status code: ${response.statusCode}')),
         );
       }
     } catch (e) {
@@ -81,7 +79,7 @@ class ProfilePage extends StatelessWidget {
   void _navigateToLogin(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(
       context,
-      '/signin',
+      '/signin', // Pastikan route ini sesuai dengan definisi di main.dart
       (route) => false,
     );
   }
