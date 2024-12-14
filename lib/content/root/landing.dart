@@ -75,7 +75,8 @@ class LandingPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Navigasi ke halaman SignUp
+                    // Debugging: Pastikan rute yang digunakan sesuai
+                    print('Navigating to /signup...');
                     Navigator.pushNamed(context, '/signup');
                   },
                   style: ElevatedButton.styleFrom(
@@ -87,10 +88,11 @@ class LandingPage extends StatelessWidget {
                   ),
                   child: const Text('Sign Up'),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 15), // Menambahkan ruang antara tombol
                 OutlinedButton(
                   onPressed: () {
-                    // Navigasi ke halaman SignIn
+                    // Debugging: Pastikan rute yang digunakan sesuai
+                    print('Navigating to /signin...');
                     Navigator.pushNamed(context, '/signin');
                   },
                   style: OutlinedButton.styleFrom(
@@ -106,7 +108,7 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

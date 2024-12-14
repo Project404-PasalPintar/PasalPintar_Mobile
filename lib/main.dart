@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pasalpintar_mobile/content/root/landing.dart';
+import 'package:pasalpintar_mobile/content/pages/signin.dart'; // Impor halaman SignIn
+import 'package:pasalpintar_mobile/content/pages/signup.dart'; // Impor halaman SignUp
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         '/landing': (context) => const LandingPage(),
+        '/signin': (context) => SignIn(), // Menambahkan rute SignIn
+        '/signup': (context) => SignUp(), // Menambahkan rute SignUp
       },
     );
   }
@@ -64,6 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(),
           ],
         ),
       ),

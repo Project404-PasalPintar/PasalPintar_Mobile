@@ -17,9 +17,14 @@ class _SignInState extends State<SignIn> {
   final FlutterSecureStorage _storage = FlutterSecureStorage();
   String _errorMessage = '';
 
+  // Variabel untuk melacak apakah password ditampilkan atau disembunyikan
+  bool _isPasswordVisible = false;
+
   Future<void> _signIn() async {
     final email = _emailController.text;
     final password = _passwordController.text;
+    final fcmToken =
+        '123'; // FCMTOKEN placeholder, sesuaikan dengan implementasi sebenarnya
 
     try {
       final response = await http.post(
@@ -30,39 +35,26 @@ class _SignInState extends State<SignIn> {
         body: jsonEncode({
           'email': email,
           'password': password,
+          'fcmToken': fcmToken, // Mengirimkan fcmToken
         }),
       );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
         final String accessToken = data['data']['accessToken'];
+        final String refreshToken = data['data']['refreshToken'];
 
+        // Menyimpan accessToken dan refreshToken ke storage
         await _storage.write(key: 'accessToken', value: accessToken);
+        await _storage.write(key: 'refreshToken', value: refreshToken);
 
-        final profileResponse = await http.get(
-          Uri.parse('https://test-z77zvpmgsa-uc.a.run.app/v1/users/profile'),
-          headers: {
-            'Authorization': 'Bearer $accessToken',
-          },
+        // Navigasi ke halaman Home
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
         );
-
-        if (profileResponse.statusCode == 200) {
-          final Map<String, dynamic> profileData =
-              jsonDecode(profileResponse.body)['data'];
-          final String firstName = profileData['firstName'] ?? 'User';
-
-          // Navigasi ke Home dan kirim firstName
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Home(),
-            ),
-          );
-        } else {
-          setState(() {
-            _errorMessage = 'Failed to fetch profile information';
-          });
-        }
       } else {
         setState(() {
           _errorMessage = 'Invalid email or password';
@@ -95,7 +87,7 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 50),
                     Text(
                       'Masuk Akun',
                       textAlign: TextAlign.center,
@@ -104,7 +96,7 @@ class _SignInState extends State<SignIn> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 20),
                     Text(
                       'Mulai Jelajahi PasalPintar!',
                       textAlign: TextAlign.center,
@@ -113,7 +105,8 @@ class _SignInState extends State<SignIn> {
                         color: Colors.grey[600],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 50),
+                    // Email Field
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -122,17 +115,31 @@ class _SignInState extends State<SignIn> {
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
+                    // Password Field
                     TextField(
                       controller: _passwordController,
+                      obscureText:
+                          !_isPasswordVisible, // Menyembunyikan/menampilkan password
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.visibility_off),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
-                      obscureText: true,
                     ),
                     const SizedBox(height: 50),
+                    // Sign In Button
                     ElevatedButton(
                       onPressed: _signIn,
                       style: ElevatedButton.styleFrom(
@@ -148,12 +155,14 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // Error message
                     Text(
                       _errorMessage,
                       style: TextStyle(color: Colors.red),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 30),
+                    // Sign up link
                     Center(
                       child: Builder(
                         builder: (context) {
