@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart'; // Import library JWT Decoder
 import "../chat/chat_lawyer_page.dart";
+import 'dart:convert';
 
 class LawyerDetailPage extends StatefulWidget {
   final String lawyerId; // ID pengacara diterima dari Home Page
@@ -16,53 +17,66 @@ class LawyerDetailPage extends StatefulWidget {
 class _LawyerDetailPageState extends State<LawyerDetailPage> {
   Map<String, dynamic>? lawyerData; // Data detail pengacara
   bool isLoading = true; // State untuk loading
+  final FlutterSecureStorage storage = FlutterSecureStorage();
+  String? userId; // User ID untuk membuat chat room ID
 
   @override
   void initState() {
     super.initState();
+    fetchUserIdFromToken(); // Ambil userId dari token JWT
     fetchLawyerDetails(); // Panggil API ketika halaman dibuka
+  }
+
+  Future<void> fetchUserIdFromToken() async {
+    try {
+      // Ambil refreshToken dari Secure Storage
+      final refreshToken = await storage.read(key: 'refreshToken');
+      if (refreshToken == null || refreshToken.isEmpty) {
+        throw Exception('Refresh token tidak ditemukan.');
+      }
+
+      // Decode token JWT untuk mengambil userId
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(refreshToken);
+      setState(() {
+        userId = decodedToken[
+            'userID']; // Pastikan nama kunci sesuai dengan payload JWT
+      });
+
+      print("User ID berhasil diambil dari token: $userId");
+    } catch (e) {
+      print("Error saat mengambil user ID dari token: $e");
+    }
   }
 
   Future<void> fetchLawyerDetails() async {
     const baseUrl = 'https://test-z77zvpmgsa-uc.a.run.app';
-    final storage = FlutterSecureStorage();
     final refreshToken = await storage.read(key: 'refreshToken');
-
-    final url = '$baseUrl/v1/users/profile/lawyer/${widget.lawyerId}';
 
     try {
       final response = await http.get(
-        Uri.parse(url),
+        Uri.parse('$baseUrl/v1/users/profile/lawyer/${widget.lawyerId}'),
         headers: {
-          'Authorization': 'Bearer $refreshToken', // Header untuk autentikasi
+          'Authorization': 'Bearer $refreshToken',
           'Content-Type': 'application/json',
         },
       );
 
-      print("Response Status: ${response.statusCode}");
-      print("Response Body: ${response.body}");
-
       if (response.statusCode == 200) {
+        // Menggunakan json.decode setelah mengimpor `dart:convert`
         final data = json.decode(response.body);
         setState(() {
-          lawyerData = data['data']; // Simpan data pengacara
-          isLoading = false; // Hentikan loading
+          lawyerData = data['data'];
+          isLoading = false;
         });
       } else {
         throw Exception('Failed to load lawyer details');
       }
     } catch (e) {
       setState(() {
-        isLoading = false; // Hentikan loading meskipun ada error
+        isLoading = false;
       });
       print("Error: $e");
     }
-  }
-
-  String formatTimestamp(Map<String, dynamic> timestamp) {
-    final seconds = timestamp['_seconds'] ?? 0;
-    final date = DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
-    return '${date.day}-${date.month}-${date.year}';
   }
 
   @override
@@ -156,35 +170,33 @@ class _LawyerDetailPageState extends State<LawyerDetailPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Created Date
-                      Text(
-                        "Dibuat pada: ${formatTimestamp(lawyerData!['createdAt'])}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
                       const Spacer(),
                       // Tombol Start Consult
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  chatRoomId:
-                                      "chatRoom123", // Ubah dengan ID chat room yang sesuai
-                                  lawyerName:
-                                      "${lawyerData!['firstName']} ${lawyerData!['lastName']}",
-                                ),
-                              ),
-                            );
-                          },
+                          onPressed: userId == null
+                              ? null
+                              : () {
+                                  final chatRoomId =
+                                      "chat_${userId}_${widget.lawyerId}";
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatPage(
+                                        chatRoomId: chatRoomId,
+                                        lawyerName:
+                                            "${lawyerData!['firstName']} ${lawyerData!['lastName']}",
+                                        lawyerId: widget
+                                            .lawyerId, // Pastikan lawyerId disediakan di sini
+                                      ),
+                                    ),
+                                  );
+                                },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
-                            backgroundColor: Colors.blue,
+                            backgroundColor:
+                                userId == null ? Colors.grey : Colors.blue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

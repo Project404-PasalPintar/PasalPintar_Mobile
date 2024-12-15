@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> signUp() async {
-    // Validasi form sederhana
+    // Validasi input
     if (firstNameController.text.isEmpty ||
         lastNameController.text.isEmpty ||
         emailController.text.isEmpty ||
@@ -69,33 +69,48 @@ class _SignUpState extends State<SignUp> {
       return;
     }
 
-    // Request ke API
-    final response = await http.post(
-      Uri.parse('https://test-z77zvpmgsa-uc.a.run.app/v1/users/auth/sign-up'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'email': emailController.text,
-        'password': passwordController.text,
-        'firstName': firstNameController.text,
-        'lastName': lastNameController.text,
-      }),
-    );
-
-    final responseBody = json.decode(response.body);
-
-    if (response.statusCode == 200 && responseBody['status'] == 'success') {
-      await secureStorage.write(
-          key: 'userID', value: responseBody['data']['userID']);
-      await secureStorage.write(
-          key: 'email', value: responseBody['data']['email']);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => SignIn()),
-        (Route<dynamic> route) => false,
+    try {
+      final response = await http.post(
+        Uri.parse('https://test-z77zvpmgsa-uc.a.run.app/v1/users/auth/sign-up'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'email': emailController.text,
+          'password': passwordController.text,
+          'firstName': firstNameController.text,
+          'lastName': lastNameController.text,
+        }),
       );
-    } else {
+
+      // Tambahkan log untuk mencetak respons API
+      print('Response Status: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      final responseBody = json.decode(response.body);
+
+      // Validasi jika pendaftaran berhasil
+      if (response.statusCode == 200 && responseBody['status'] == 'success') {
+        // Simpan data ke FlutterSecureStorage
+        await secureStorage.write(
+            key: 'userID', value: responseBody['data']['userID']);
+        await secureStorage.write(
+            key: 'email', value: responseBody['data']['email']);
+
+        // Direct ke halaman SignIn
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Jika gagal, tampilkan pesan error
+        setState(() {
+          errorMessage = responseBody['message'] ?? 'Pendaftaran gagal.';
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
       setState(() {
-        errorMessage = responseBody['message'] ?? 'Pendaftaran gagal.';
+        errorMessage = "Terjadi kesalahan saat melakukan pendaftaran.";
       });
     }
   }

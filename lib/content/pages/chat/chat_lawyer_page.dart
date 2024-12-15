@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ChatPage extends StatefulWidget {
   final String chatRoomId;
   final String lawyerName; // Nama pengacara untuk ditampilkan di AppBar
+  final String lawyerId; // ID pengacara untuk pengiriman pesan
 
-  const ChatPage({Key? key, required this.chatRoomId, required this.lawyerName})
-      : super(key: key);
+  const ChatPage({
+    Key? key,
+    required this.chatRoomId,
+    required this.lawyerName,
+    required this.lawyerId,
+  }) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -17,12 +23,16 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController messageController = TextEditingController();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final ScrollController _scrollController = ScrollController();
   List<dynamic> messages = [];
   bool isLoading = true;
+
+  String? userId; // Untuk menyimpan ID pengguna
 
   @override
   void initState() {
     super.initState();
+    fetchUserId(); // Ambil user ID dari token
     fetchMessages(); // Load messages ketika halaman dibuka
   }
 
@@ -35,6 +45,23 @@ class _ChatPageState extends State<ChatPage> {
       'Authorization': 'Bearer $refreshToken',
       'Content-Type': 'application/json',
     };
+  }
+
+  Future<void> fetchUserId() async {
+    try {
+      final refreshToken = await storage.read(key: 'refreshToken');
+      if (refreshToken == null || refreshToken.isEmpty) {
+        throw Exception("Refresh token tidak ditemukan");
+      }
+
+      // Decode token untuk mendapatkan userID
+      final decodedToken = JwtDecoder.decode(refreshToken);
+      setState(() {
+        userId = decodedToken['userID']; // Simpan userID dari token
+      });
+    } catch (e) {
+      print("Error saat mengambil userID: $e");
+    }
   }
 
   Future<void> fetchMessages() async {
@@ -51,6 +78,7 @@ class _ChatPageState extends State<ChatPage> {
           messages = data['data']; // Simpan pesan ke state
           isLoading = false;
         });
+        _scrollToBottom();
       } else {
         throw Exception(
             "Gagal memuat pesan. Status code: ${response.statusCode}");
@@ -67,6 +95,11 @@ class _ChatPageState extends State<ChatPage> {
     const baseUrl = "https://test-z77zvpmgsa-uc.a.run.app";
     final url = "$baseUrl/v1/chat/message";
 
+    if (userId == null) {
+      print("User ID belum tersedia!");
+      return;
+    }
+
     try {
       final headers = await _getHeaders();
       final response = await http.post(
@@ -74,8 +107,8 @@ class _ChatPageState extends State<ChatPage> {
         headers: headers,
         body: jsonEncode({
           "chatRoomId": widget.chatRoomId,
-          "senderID": "userID123", // Ganti dengan ID user yang benar
-          "receiverID": "lawyerID456", // Ganti dengan ID lawyer
+          "senderID": userId, // ID pengguna dari token
+          "receiverID": widget.lawyerId, // ID pengacara dari parameter
           "message": message,
         }),
       );
@@ -86,12 +119,23 @@ class _ChatPageState extends State<ChatPage> {
           messages.add(newMessage); // Tambahkan pesan baru ke daftar
         });
         messageController.clear(); // Bersihkan input setelah mengirim
+        _scrollToBottom();
       } else {
         throw Exception(
             "Gagal mengirim pesan. Status code: ${response.statusCode}");
       }
     } catch (e) {
       print("Error saat mengirim pesan: $e");
+    }
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
   }
 
@@ -106,15 +150,13 @@ class _ChatPageState extends State<ChatPage> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                // Daftar pesan
                 Expanded(
                   child: ListView.builder(
-                    // Ubah reverse menjadi false
+                    controller: _scrollController,
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final message = messages[index];
-                      final isSentByUser = message['senderID'] ==
-                          "userID123"; // Ubah sesuai ID user
+                      final isSentByUser = message['senderID'] == userId;
                       return Align(
                         alignment: isSentByUser
                             ? Alignment.centerRight
@@ -141,7 +183,6 @@ class _ChatPageState extends State<ChatPage> {
                     },
                   ),
                 ),
-                // Input pesan
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -162,7 +203,7 @@ class _ChatPageState extends State<ChatPage> {
                         onPressed: () {
                           final message = messageController.text.trim();
                           if (message.isNotEmpty) {
-                            sendMessage(message); // Kirim pesan
+                            sendMessage(message);
                           }
                         },
                         style: ElevatedButton.styleFrom(
